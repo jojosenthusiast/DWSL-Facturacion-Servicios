@@ -1,0 +1,14 @@
+{
+    "name": "dwsl/facturacion-servicios",
+    "description": "Sistema de facturacion de servicios - Caso F (Desarrollo Web con Software Libre)",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
