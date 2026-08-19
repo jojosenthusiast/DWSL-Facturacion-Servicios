@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Contratos\Facturable;
+
 final class Factura
 {
     private Cliente $cliente;

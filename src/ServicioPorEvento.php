@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Contratos\Facturable;
+use App\Servicios\Servicio;
+
 class ServicioPorEvento extends Servicio implements Facturable
 {
     private int $cantidadEventos;

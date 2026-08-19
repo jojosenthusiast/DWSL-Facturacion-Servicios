@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Servicios;
+
+use App\Contratos\Facturable;
 
 abstract class Servicio implements Facturable
 {
