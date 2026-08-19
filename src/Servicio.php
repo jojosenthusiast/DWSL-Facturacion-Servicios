@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-abstract class Servicio
+abstract class Servicio implements Facturable
 {
     private string $id;
     private string $nombre;
