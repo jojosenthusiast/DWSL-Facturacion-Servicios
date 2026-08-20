@@ -12,7 +12,7 @@ final class Factura
     private PeriodoFacturacion $periodo;
 
     /** @var Facturable[] */
-    private array $servicios = [];
+    private array $facturables = [];
 
     public function __construct(Cliente $cliente, PeriodoFacturacion $periodo)
     {
@@ -20,30 +20,72 @@ final class Factura
         $this->periodo = $periodo;
     }
 
+    public function obtenerCliente(): Cliente
+    {
+        return $this->cliente;
+    }
+
+    public function obtenerPeriodo(): PeriodoFacturacion
+    {
+        return $this->periodo;
+    }
+
+    public function agregarFacturable(Facturable $facturable): void
+    {
+        $this->facturables[] = $facturable;
+    }
+
+    /** Compatibilidad con el demo actual; preferir agregarFacturable(). */
     public function agregarServicio(Facturable $servicio): void
     {
-        $this->servicios[] = $servicio;
+        $this->agregarFacturable($servicio);
+    }
+
+    /**
+     * @return Facturable[]
+     */
+    public function obtenerFacturables(): array
+    {
+        return $this->facturables;
     }
 
     public function calcularTotal(): float
     {
         $total = 0.0;
 
-        foreach ($this->servicios as $servicio) {
-            $total += $servicio->calcularImporte();
+        foreach ($this->facturables as $facturable) {
+            $total += $facturable->calcularImporte();
         }
 
         return $total;
     }
 
-    public function generarDetalle(): array
+    /**
+     * @return list<array{descripcion: string, importe: float}>
+     */
+    public function obtenerLineas(): array
     {
         return array_map(
-            static fn (Facturable $servicio): string => $servicio->obtenerDescripcion(),
-            $this->servicios
+            static fn (Facturable $facturable): array => [
+                'descripcion' => $facturable->obtenerDescripcion(),
+                'importe' => $facturable->calcularImporte(),
+            ],
+            $this->facturables
         );
     }
 
+    /**
+     * @return string[]
+     */
+    public function generarDetalle(): array
+    {
+        return array_map(
+            static fn (array $linea): string => $linea['descripcion'],
+            $this->obtenerLineas()
+        );
+    }
+
+    /** Compatibilidad temporal hasta que exista el modulo de reporte en consola. */
     public function imprimir(): string
     {
         $lineas = [];
