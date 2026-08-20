@@ -1,0 +1,35 @@
+{
+    "cliente": {
+        "id": "CLI-001",
+        "nombre": "Ana Martinez",
+        "correo": "ana.martinez@example.com"
+    },
+    "periodo": {
+        "fecha_inicio": "2026-07-01",
+        "fecha_fin": "2026-07-31",
+        "etiqueta": "julio 2026"
+    },
+    "total": "102.08",
+    "servicios": [
+        {
+            "indice": 1,
+            "descripcion": "Agua potable (medido) - consumo: 25.50 unidades x $0.85 = $21.68",
+            "importe": "21.68"
+        },
+        {
+            "indice": 2,
+            "descripcion": "Energia electrica (medido) - consumo: 70.00 unidades x $0.22 = $15.40",
+            "importe": "15.40"
+        },
+        {
+            "indice": 3,
+            "descripcion": "Internet residencial (tarifa plana) - mensualidad: $35.00",
+            "importe": "35.00"
+        },
+        {
+            "indice": 4,
+            "descripcion": "Mantenimiento de areas comunes (por evento) - 2 eventos x $15.00 = $30.00",
+            "importe": "30.00"
+        }
+    ]
+}

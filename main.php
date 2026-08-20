@@ -10,7 +10,8 @@ use App\PeriodoFacturacion;
 use App\ServicioMedido;
 use App\ServicioPorEvento;
 use App\ServicioTarifaPlana;
-use App\Reportes\ReporteFacturaConsola; 
+use App\Reportes\ReporteFacturaConsola;
+use App\Infrastructure\Export\ExportadorFacturaJson; 
 
 $cliente = new Cliente('CLI-001', 'Ana Martinez', 'ana.martinez@example.com');
 
@@ -29,3 +30,23 @@ $factura->agregarServicio(new ServicioPorEvento('SRV-MANT', 'Mantenimiento de ar
 $reporte = new ReporteFacturaConsola();
 
 echo $reporte->generar($factura) . PHP_EOL;
+
+echo PHP_EOL . "Exportando factura a JSON..." . PHP_EOL;
+
+$exportador = new ExportadorFacturaJson();
+$exportacionExitosa = $exportador->exportar($factura);
+
+if ($exportacionExitosa) {
+    echo "Factura exportada exitosamente a JSON." . PHP_EOL;
+    echo "Archivo generado: storage/factura_demo.json" . PHP_EOL;
+} else {
+    echo "Error al exportar la factura a JSON. Revisa los logs." . PHP_EOL;
+}
+
+echo PHP_EOL . "--- Contenido del JSON generado ---" . PHP_EOL;
+$archivoJson = 'storage/factura_demo.json';
+if (file_exists($archivoJson)) {
+    echo file_get_contents($archivoJson) . PHP_EOL;
+} else {
+    echo "El archivo JSON no se generó correctamente." . PHP_EOL;
+}
