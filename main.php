@@ -22,10 +22,10 @@ $periodo = new PeriodoFacturacion(
 
 $factura = new Factura($cliente, $periodo);
 
-$factura->agregarServicio(new ServicioMedido('SRV-AGUA', 'Agua potable', 120.0, 145.5, 0.85));
-$factura->agregarServicio(new ServicioMedido('SRV-ENER', 'Energia electrica', 980.0, 1050.0, 0.22));
-$factura->agregarServicio(new ServicioTarifaPlana('SRV-INTERNET', 'Internet residencial', 35.0));
-$factura->agregarServicio(new ServicioPorEvento('SRV-MANT', 'Mantenimiento de areas comunes', 2, 15.0));
+$factura->agregarFacturable(new ServicioMedido('SRV-AGUA', 'Agua potable', 120.0, 145.5, 0.85));
+$factura->agregarFacturable(new ServicioMedido('SRV-ENER', 'Energia electrica', 980.0, 1050.0, 0.22));
+$factura->agregarFacturable(new ServicioTarifaPlana('SRV-INTERNET', 'Internet residencial', 35.0));
+$factura->agregarFacturable(new ServicioPorEvento('SRV-MANT', 'Mantenimiento de areas comunes', 2, 15.0));
 
 $reporte = new ReporteFacturaConsola();
 
