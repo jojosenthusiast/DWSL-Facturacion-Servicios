@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Contratos\Facturable;
 use App\Servicios\Servicio;
 
-class ServicioMedido extends Servicio implements Facturable
+class ServicioMedido extends Servicio
 {
     private float $lecturaAnterior;
     private float $lecturaActual;
@@ -22,8 +21,6 @@ class ServicioMedido extends Servicio implements Facturable
     ) {
         parent::__construct($id, $nombre);
 
-        $this->lecturaAnterior = 0.0;
-        $this->lecturaActual = 0.0;
         $this->setLecturas($lecturaAnterior, $lecturaActual);
         $this->setTarifaPorUnidad($tarifaPorUnidad);
     }
@@ -46,6 +43,21 @@ class ServicioMedido extends Servicio implements Facturable
     {
         $this->validarMontoPositivo($tarifaPorUnidad, 'La tarifa por unidad');
         $this->tarifaPorUnidad = $tarifaPorUnidad;
+    }
+
+    public function getLecturaAnterior(): float
+    {
+        return $this->lecturaAnterior;
+    }
+
+    public function getLecturaActual(): float
+    {
+        return $this->lecturaActual;
+    }
+
+    public function getTarifaPorUnidad(): float
+    {
+        return $this->tarifaPorUnidad;
     }
 
     public function getConsumo(): float

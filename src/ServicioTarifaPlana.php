@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Contratos\Facturable;
 use App\Servicios\Servicio;
 
-class ServicioTarifaPlana extends Servicio implements Facturable
+class ServicioTarifaPlana extends Servicio
 {
     private float $mensualidad;
 
@@ -21,6 +20,11 @@ class ServicioTarifaPlana extends Servicio implements Facturable
     {
         $this->validarMontoPositivo($mensualidad, 'La mensualidad');
         $this->mensualidad = $mensualidad;
+    }
+
+    public function getMensualidad(): float
+    {
+        return $this->mensualidad;
     }
 
     public function calcularImporte(): float

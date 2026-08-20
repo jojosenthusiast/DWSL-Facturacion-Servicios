@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Contratos\Facturable;
 use App\Servicios\Servicio;
 
-class ServicioPorEvento extends Servicio implements Facturable
+class ServicioPorEvento extends Servicio
 {
     private int $cantidadEventos;
     private float $tarifaPorEvento;
@@ -32,6 +31,16 @@ class ServicioPorEvento extends Servicio implements Facturable
     {
         $this->validarMontoPositivo($tarifaPorEvento, 'La tarifa por evento');
         $this->tarifaPorEvento = $tarifaPorEvento;
+    }
+
+    public function getCantidadEventos(): int
+    {
+        return $this->cantidadEventos;
+    }
+
+    public function getTarifaPorEvento(): float
+    {
+        return $this->tarifaPorEvento;
     }
 
     public function calcularImporte(): float

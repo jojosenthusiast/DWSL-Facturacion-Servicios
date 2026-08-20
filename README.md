@@ -19,8 +19,10 @@ Una empresa de servicios factura consumos de distinta naturaleza: servicios medi
 
 ```
 src/
-  Facturable.php          Contrato con calcularImporte() y obtenerDescripcion()
-  Servicio.php             Clase abstracta base (id, nombre, activo, validaciones)
+  Contratos/
+    Facturable.php         Contrato con calcularImporte() y obtenerDescripcion()
+  Servicios/
+    Servicio.php           Clase abstracta base (id, nombre, activo, validaciones)
   ServicioMedido.php        Servicio con lectura anterior/actual x tarifa
   ServicioTarifaPlana.php   Servicio de mensualidad fija
   ServicioPorEvento.php     Servicio cobrado por cantidad de eventos
