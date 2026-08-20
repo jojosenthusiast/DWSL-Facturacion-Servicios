@@ -6,17 +6,14 @@ namespace App;
 
 final class PeriodoFacturacion
 {
-    private \DateTimeImmutable $inicio;
-    private \DateTimeImmutable $fin;
-
-    public function __construct(\DateTimeImmutable $inicio, \DateTimeImmutable $fin)
+    public function __construct(
+        private readonly \DateTimeImmutable $inicio,
+        private readonly \DateTimeImmutable $fin
+    )
     {
         if ($fin <= $inicio) {
             throw new \InvalidArgumentException('La fecha de fin debe ser posterior a la fecha de inicio.');
         }
-
-        $this->inicio = $inicio;
-        $this->fin = $fin;
     }
 
     public function getInicio(): \DateTimeImmutable

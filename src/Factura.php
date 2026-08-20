@@ -35,12 +35,6 @@ final class Factura
         $this->facturables[] = $facturable;
     }
 
-    /** Compatibilidad con el demo actual; preferir agregarFacturable(). */
-    public function agregarServicio(Facturable $servicio): void
-    {
-        $this->agregarFacturable($servicio);
-    }
-
     /**
      * @return Facturable[]
      */
@@ -83,26 +77,5 @@ final class Factura
             static fn (array $linea): string => $linea['descripcion'],
             $this->obtenerLineas()
         );
-    }
-
-    /** Compatibilidad temporal hasta que exista el modulo de reporte en consola. */
-    public function imprimir(): string
-    {
-        $lineas = [];
-        $lineas[] = str_repeat('=', 60);
-        $lineas[] = sprintf('FACTURA - %s', $this->periodo->obtenerEtiqueta());
-        $lineas[] = str_repeat('=', 60);
-        $lineas[] = sprintf('Cliente: %s (%s)', $this->cliente->getNombre(), $this->cliente->getCorreo());
-        $lineas[] = str_repeat('-', 60);
-
-        foreach ($this->generarDetalle() as $detalle) {
-            $lineas[] = $detalle;
-        }
-
-        $lineas[] = str_repeat('-', 60);
-        $lineas[] = sprintf('TOTAL A PAGAR: $%.2f', $this->calcularTotal());
-        $lineas[] = str_repeat('=', 60);
-
-        return implode(PHP_EOL, $lineas);
     }
 }
