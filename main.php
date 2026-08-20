@@ -10,6 +10,7 @@ use App\PeriodoFacturacion;
 use App\ServicioMedido;
 use App\ServicioPorEvento;
 use App\ServicioTarifaPlana;
+use App\Reportes\ReporteFacturaConsola; 
 
 $cliente = new Cliente('CLI-001', 'Ana Martinez', 'ana.martinez@example.com');
 
@@ -25,4 +26,6 @@ $factura->agregarServicio(new ServicioMedido('SRV-ENER', 'Energia electrica', 98
 $factura->agregarServicio(new ServicioTarifaPlana('SRV-INTERNET', 'Internet residencial', 35.0));
 $factura->agregarServicio(new ServicioPorEvento('SRV-MANT', 'Mantenimiento de areas comunes', 2, 15.0));
 
-echo $factura->imprimir() . PHP_EOL;
+$reporte = new ReporteFacturaConsola();
+
+echo $reporte->generar($factura) . PHP_EOL;
