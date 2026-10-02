@@ -20,8 +20,8 @@ class ServicioPorEvento extends Servicio
 
     public function setCantidadEventos(int $cantidadEventos): void
     {
-        if ($cantidadEventos < 0) {
-            throw new \InvalidArgumentException('La cantidad de eventos no puede ser negativa.');
+        if ($cantidadEventos <= 0) {
+            throw new \InvalidArgumentException('La cantidad de eventos debe ser mayor que cero.');
         }
 
         $this->cantidadEventos = $cantidadEventos;
@@ -29,7 +29,7 @@ class ServicioPorEvento extends Servicio
 
     public function setTarifaPorEvento(float $tarifaPorEvento): void
     {
-        $this->validarMontoPositivo($tarifaPorEvento, 'La tarifa por evento');
+        $this->validarMayorQueCero($tarifaPorEvento, 'La tarifa por evento');
         $this->tarifaPorEvento = $tarifaPorEvento;
     }
 

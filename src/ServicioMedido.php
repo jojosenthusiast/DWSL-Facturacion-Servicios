@@ -28,6 +28,7 @@ class ServicioMedido extends Servicio
     public function setLecturas(float $lecturaAnterior, float $lecturaActual): void
     {
         $this->validarMontoPositivo($lecturaAnterior, 'La lectura anterior');
+        $this->validarMontoPositivo($lecturaActual, 'La lectura actual');
 
         if ($lecturaActual < $lecturaAnterior) {
             throw new \InvalidArgumentException(
@@ -41,7 +42,7 @@ class ServicioMedido extends Servicio
 
     public function setTarifaPorUnidad(float $tarifaPorUnidad): void
     {
-        $this->validarMontoPositivo($tarifaPorUnidad, 'La tarifa por unidad');
+        $this->validarMayorQueCero($tarifaPorUnidad, 'La tarifa por unidad');
         $this->tarifaPorUnidad = $tarifaPorUnidad;
     }
 
