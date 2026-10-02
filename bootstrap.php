@@ -5,6 +5,22 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/src/Web/funciones.php';
 
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+ini_set('log_errors', '1');
+
+set_exception_handler(static function (Throwable $exception): void {
+    error_log((string) $exception);
+
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: text/plain; charset=UTF-8');
+    }
+
+    echo \App\Exceptions\DatabaseException::PUBLIC_MESSAGE;
+    exit(1);
+});
+
 sesion_iniciar();
 
 /** [INYECCION-DEPENDENCIAS] Create PDO only when a route actually needs the database. */

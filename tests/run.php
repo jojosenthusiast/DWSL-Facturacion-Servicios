@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 require dirname(__DIR__) . '/src/Web/funciones.php';
+require __DIR__ . '/errors.php';
 
 use App\ServicioMedido;
 use App\ServicioPorEvento;
