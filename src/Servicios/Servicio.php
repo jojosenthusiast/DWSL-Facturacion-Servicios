@@ -49,10 +49,17 @@ abstract class Servicio implements Facturable
 
     protected function validarMontoPositivo(float $monto, string $campo): void
     {
-        if ($monto < 0) {
+        if (!is_finite($monto) || $monto < 0) {
             throw new \InvalidArgumentException(
-                sprintf('%s no puede ser negativo (valor recibido: %.2f).', $campo, $monto)
+                sprintf('%s debe ser un número finito no negativo.', $campo)
             );
+        }
+    }
+
+    protected function validarMayorQueCero(float $monto, string $campo): void
+    {
+        if (!is_finite($monto) || $monto <= 0) {
+            throw new \InvalidArgumentException(sprintf('%s debe ser mayor que cero.', $campo));
         }
     }
 }

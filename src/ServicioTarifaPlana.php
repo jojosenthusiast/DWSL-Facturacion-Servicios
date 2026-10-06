@@ -18,7 +18,7 @@ class ServicioTarifaPlana extends Servicio
 
     public function setMensualidad(float $mensualidad): void
     {
-        $this->validarMontoPositivo($mensualidad, 'La mensualidad');
+        $this->validarMayorQueCero($mensualidad, 'La mensualidad');
         $this->mensualidad = $mensualidad;
     }
 

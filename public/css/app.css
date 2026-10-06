@@ -1,0 +1,11 @@
+:root {
+    font-family: system-ui, sans-serif;
+    color: #20252b;
+    background: #f4f6f8;
+}
+
+body { margin: 0; }
+.contenedor { max-width: 48rem; margin: 4rem auto; padding: 2rem; background: #fff; }
+.formulario { margin-top: 2rem; }
+button { padding: .65rem 1rem; cursor: pointer; }
+.mensaje { padding: .75rem; background: #e7f6ec; }
