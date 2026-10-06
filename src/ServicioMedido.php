@@ -66,6 +66,34 @@ class ServicioMedido extends Servicio
         return $this->lecturaActual - $this->lecturaAnterior;
     }
 
+    public function getTipo(): string
+    {
+        return 'medido';
+    }
+
+    public function tipoLegible(): string
+    {
+        return 'Medido';
+    }
+
+    public function datosEspecificos(): array
+    {
+        return [
+            'lectura_anterior' => $this->getLecturaAnterior(),
+            'lectura_actual' => $this->getLecturaActual(),
+            'tarifa_por_unidad' => $this->getTarifaPorUnidad(),
+        ];
+    }
+
+    public function camposEspecificos(): array
+    {
+        return [
+            'lectura_anterior' => ['etiqueta' => 'Lectura anterior', 'tipo' => 'number', 'min' => 0, 'max' => 999999999.999, 'step' => '0.001', 'required' => true],
+            'lectura_actual' => ['etiqueta' => 'Lectura actual', 'tipo' => 'number', 'min' => 0, 'max' => 999999999.999, 'step' => '0.001', 'required' => true],
+            'tarifa_por_unidad' => ['etiqueta' => 'Tarifa por unidad', 'tipo' => 'number', 'min' => 0.0001, 'max' => 99999999.9999, 'step' => '0.0001', 'required' => true],
+        ];
+    }
+
     public function calcularImporte(): float
     {
         return $this->getConsumo() * $this->tarifaPorUnidad;

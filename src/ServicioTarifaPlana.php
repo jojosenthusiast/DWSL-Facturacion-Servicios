@@ -27,6 +27,28 @@ class ServicioTarifaPlana extends Servicio
         return $this->mensualidad;
     }
 
+    public function getTipo(): string
+    {
+        return 'tarifa_plana';
+    }
+
+    public function tipoLegible(): string
+    {
+        return 'Tarifa plana';
+    }
+
+    public function datosEspecificos(): array
+    {
+        return ['mensualidad' => $this->getMensualidad()];
+    }
+
+    public function camposEspecificos(): array
+    {
+        return [
+            'mensualidad' => ['etiqueta' => 'Mensualidad', 'tipo' => 'number', 'min' => 0.01, 'max' => 9999999999.99, 'step' => '0.01', 'required' => true],
+        ];
+    }
+
     public function calcularImporte(): float
     {
         return $this->mensualidad;

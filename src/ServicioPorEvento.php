@@ -43,6 +43,32 @@ class ServicioPorEvento extends Servicio
         return $this->tarifaPorEvento;
     }
 
+    public function getTipo(): string
+    {
+        return 'por_evento';
+    }
+
+    public function tipoLegible(): string
+    {
+        return 'Por evento';
+    }
+
+    public function datosEspecificos(): array
+    {
+        return [
+            'cantidad_eventos' => $this->getCantidadEventos(),
+            'tarifa_por_evento' => $this->getTarifaPorEvento(),
+        ];
+    }
+
+    public function camposEspecificos(): array
+    {
+        return [
+            'cantidad_eventos' => ['etiqueta' => 'Cantidad de eventos', 'tipo' => 'number', 'min' => 1, 'max' => 4294967295, 'step' => '1', 'required' => true],
+            'tarifa_por_evento' => ['etiqueta' => 'Tarifa por evento', 'tipo' => 'number', 'min' => 0.01, 'max' => 9999999999.99, 'step' => '0.01', 'required' => true],
+        ];
+    }
+
     public function calcularImporte(): float
     {
         return $this->cantidadEventos * $this->tarifaPorEvento;
