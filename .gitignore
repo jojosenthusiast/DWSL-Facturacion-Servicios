@@ -3,6 +3,7 @@
 /config/config.php
 /public/uploads/*
 !/public/uploads/.gitkeep
+!/public/uploads/imagen-predeterminada.png
 .DS_Store
 Thumbs.db
 .vs
