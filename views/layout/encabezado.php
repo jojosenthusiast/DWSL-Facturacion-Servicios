@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $mensajeExito = flash_obtener('success');
 $mensajeError = flash_obtener('error');
-$nombreSistema = 'FacturaciÃ³n de servicios';
+$nombreSistema = 'Facturación de servicios';
 $tituloPagina = $titulo ?? $nombreSistema;
 $rutaActual = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $enlaces = [
@@ -27,7 +27,7 @@ $enlaces = [
 <header class="cabecera-sitio">
     <div class="contenedor">
         <p class="nombre-sistema"><a href="/"><?= e($nombreSistema) ?></a></p>
-        <nav class="navegacion" aria-label="NavegaciÃ³n principal">
+        <nav class="navegacion" aria-label="Navegación principal">
             <?php foreach ($enlaces as $ruta => $etiqueta): ?>
                 <?php $activo = $ruta === '/' ? $rutaActual === '/' : str_starts_with($rutaActual, dirname($ruta) . '/'); ?>
                 <a href="<?= e($ruta) ?>"<?= $activo ? ' aria-current="page"' : '' ?>><?= e($etiqueta) ?></a>
