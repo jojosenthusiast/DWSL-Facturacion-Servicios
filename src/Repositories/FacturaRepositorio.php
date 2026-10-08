@@ -13,8 +13,10 @@ use InvalidArgumentException;
 use PDO;
 use PDOException;
 
+/** [SEGURIDAD] Consultas preparadas con valores vinculados; ningún SQL fuera de la clase. */
 final class FacturaRepositorio
 {
+    /** [INYECCION-DEPENDENCIAS] Recibe el PDO ya construido. */
     public function __construct(private readonly PDO $pdo)
     {
     }
@@ -66,6 +68,7 @@ final class FacturaRepositorio
         return (int) $statement->fetchColumn() > 0;
     }
 
+    // [CRUD-CREATE] Factura y detalles en una transacción.
     public function crear(int $clienteId, PeriodoFacturacion $periodo, array $idsServicios): int
     {
         $idsServicios = array_values(array_unique(array_map('intval', $idsServicios)));
@@ -136,6 +139,7 @@ final class FacturaRepositorio
         }
     }
 
+    // [CRUD-READ] Listado con cliente, período y total.
     public function listar(): array
     {
         return array_map(

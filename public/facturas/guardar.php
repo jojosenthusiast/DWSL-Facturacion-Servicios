@@ -11,6 +11,7 @@ use App\Validation\Validador;
 
 $formularioUrl = '/facturas/crear.php';
 
+// [PRG] Redirige (303) conservando valores y errores.
 $volverAlFormulario = static function (array $valores, array $errores, ?string $mensaje = null) use ($formularioUrl): never {
     formulario_guardar($valores, $errores);
     if ($mensaje !== null) {
@@ -25,6 +26,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     exit;
 }
 
+// [SEGURIDAD] Exige POST con token CSRF válido.
 csrf_exigir_post();
 
 $clienteRecibido = $_POST['cliente_id'] ?? '';
@@ -42,6 +44,7 @@ $valores = [
         : [],
 ];
 
+// [VALIDACION] Reglas del servidor.
 $validador = (new Validador())
     ->requerido('cliente_id', $valores['cliente_id'], 'Selecciona un cliente.')
     ->enteroPositivo('cliente_id', $valores['cliente_id'], 'El cliente seleccionado no es válido.')
@@ -52,7 +55,7 @@ $errores = $validador->errores();
 $periodo = null;
 if (preg_match('/^\d{4}-(0[1-9]|1[0-2])$/D', $valores['periodo']) === 1) {
     $inicio = DateTimeImmutable::createFromFormat('Y-m-d', $valores['periodo'] . '-01');
-    if ($inicio instanceof DateTimeImmutable) {
+    if ($inicio !== false) {
         $periodo = new PeriodoFacturacion($inicio, $inicio->modify('last day of this month'));
     }
 }
@@ -68,12 +71,12 @@ if ($valores['servicios'] === []) {
 
 $repositorio = new FacturaRepositorio(conexion_obtener());
 
-if ($errores === [] && $periodo instanceof PeriodoFacturacion
+if ($errores === [] && $periodo !== null
     && $repositorio->existePeriodo((int) $valores['cliente_id'], $periodo->getInicio(), $periodo->getFin())) {
     $errores['periodo'][] = 'Ya existe una factura para ese cliente en ese período.';
 }
 
-if ($errores !== [] || !$periodo instanceof PeriodoFacturacion) {
+if ($errores !== [] || $periodo === null) {
     $volverAlFormulario($valores, $errores, 'Revisa los campos marcados para poder crear la factura.');
 }
 
