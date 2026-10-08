@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 ?>
-<p class="acciones"><a class="boton" href="/facturas/crear.php">Crear factura</a></p>
+<div class="cabecera-pagina"><p>Consulta las facturas emitidas y sus importes.</p><a class="boton" href="/facturas/crear.php">Crear factura</a></div>
 
 <?php if ($facturas === []): ?>
     <p>Todavía no hay facturas registradas.</p>
 <?php else: ?>
-    <table class="tabla">
+    <div class="tabla-responsive">
         <caption>Facturas emitidas</caption>
         <thead>
         <tr>
@@ -25,7 +25,7 @@ declare(strict_types=1);
                 <td><?= e($factura['cliente']) ?></td>
                 <td><?= e($factura['periodo']) ?><br><small><?= e($factura['rango']) ?></small></td>
                 <td class="numerico">$<?= e(sprintf('%.2f', $factura['total'])) ?></td>
-                <td><a href="/facturas/ver.php?id=<?= e($factura['id']) ?>">Ver detalle</a></td>
+                <td><a class="boton boton-secundario" href="/facturas/ver.php?id=<?= e($factura['id']) ?>">Ver detalle</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

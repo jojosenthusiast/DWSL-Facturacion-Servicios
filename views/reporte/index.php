@@ -5,10 +5,10 @@ declare(strict_types=1);
 <?php if ($entradas === []): ?>
     <p>Todavía no hay facturas guardadas. Puedes crear una en <a href="/facturas/crear.php">Nueva factura</a>.</p>
 <?php else: ?>
-    <p>Facturas en el reporte: <?= e(count($entradas)) ?></p>
+    <p class="reporte-resumen">Facturas en el reporte: <strong><?= e(count($entradas)) ?></strong></p>
     <?php foreach ($entradas as $entrada): ?>
         <?php $factura = $entrada['factura']; ?>
-        <section class="reporte">
+        <article class="reporte reporte-factura">
             <h2>FACTURA MENSUAL #<?= e($entrada['id']) ?></h2>
 
             <p class="reporte-dato"><strong>Cliente:</strong> <?= e($factura->obtenerCliente()->getNombre()) ?></p>
@@ -27,7 +27,7 @@ declare(strict_types=1);
             <hr class="separador">
 
             <p class="total">Total: $<?= e(sprintf('%.2f', $factura->calcularTotal())) ?></p>
-            <p><a href="/facturas/ver.php?id=<?= e($entrada['id']) ?>">Ver detalle de la factura</a></p>
-        </section>
+            <p class="acciones"><a class="boton boton-secundario" href="/facturas/ver.php?id=<?= e($entrada['id']) ?>">Ver detalle de la factura</a></p>
+        </article>
     <?php endforeach; ?>
 <?php endif; ?>

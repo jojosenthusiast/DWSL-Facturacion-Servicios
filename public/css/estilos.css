@@ -118,3 +118,20 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--color-primario
 .modulo-tarjeta .boton { margin-top: auto; align-self: flex-start; }
 .panel-resumen { padding: 1.25rem; border: 1px solid var(--color-borde, #d9e1ec); border-radius: var(--radio, .75rem); }
 @media (max-width: 768px) { .modulo-tarjeta .boton { align-self: stretch; } }
+
+/* Facturas y reporte: presentacion uniforme */
+.cabecera-pagina { display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.cabecera-pagina p { margin: 0; color: var(--color-secundario); }
+.texto-ayuda { color: var(--color-secundario); margin-bottom: 1.25rem; }
+.boton-secundario { display: inline-flex; align-items: center; justify-content: center; padding: .6rem 1rem; min-height: 2.5rem; border: 1px solid var(--color-borde); border-radius: .5rem; background: #fff; color: var(--color-primario); text-decoration: none; font-weight: 600; }
+.boton-secundario:hover, .boton-secundario:focus-visible { background: #eaf1fb; color: var(--color-primario-hover); }
+.reporte-resumen { padding: 1rem 1.25rem; background: #eaf1fb; border: 1px solid var(--color-borde); border-radius: var(--radio); }
+.reporte-factura { margin-block: 1.25rem; }
+.reporte-factura h2, .factura-detalle h2 { margin-top: 0; }
+.reporte-factura .linea { padding: .5rem 0; border-bottom: 1px solid var(--color-borde); }
+.factura-detalle .tabla-responsive { margin-top: 1rem; }
+@media (max-width: 768px) {
+  .cabecera-pagina { align-items: stretch; flex-direction: column; }
+  .cabecera-pagina > .boton { width: 100%; }
+  .reporte-factura { padding: 1rem; }
+}

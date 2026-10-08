@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $lineas = $factura->obtenerLineas();
 ?>
-<section class="reporte">
+<section class="reporte factura-detalle">
     <h2>Factura #<?= e($id) ?></h2>
 
     <dl class="reporte-datos">
@@ -21,7 +21,7 @@ $lineas = $factura->obtenerLineas();
     <?php if ($lineas === []): ?>
         <p>La factura no tiene servicios asociados.</p>
     <?php else: ?>
-        <table class="tabla">
+        <div class="tabla-responsive">
             <caption>Servicios incluidos</caption>
             <thead>
             <tr>
@@ -50,6 +50,6 @@ $lineas = $factura->obtenerLineas();
 </section>
 
 <p class="acciones">
-    <a href="/reporte/index.php">Ver reporte web</a>
-    <a href="/facturas/index.php">Volver al listado</a>
+    <a class="boton" href="/reporte/index.php">Ver reporte web</a>
+    <a class="boton boton-secundario" href="/facturas/index.php">Volver al listado</a>
 </p>
