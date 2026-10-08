@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+
+// [POLIMORFISMO] obtenerLineas() y calcularTotal() sin condicionales por tipo.
 ?>
 <?php if ($entradas === []): ?>
     <p>Todavía no hay facturas guardadas. Puedes crear una en <a href="/facturas/crear.php">Nueva factura</a>.</p>

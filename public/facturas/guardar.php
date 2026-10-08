@@ -11,6 +11,7 @@ use App\Validation\Validador;
 
 $formularioUrl = '/facturas/crear.php';
 
+// [PRG] Redirige (303) conservando valores y errores.
 $volverAlFormulario = static function (array $valores, array $errores, ?string $mensaje = null) use ($formularioUrl): never {
     formulario_guardar($valores, $errores);
     if ($mensaje !== null) {
@@ -25,6 +26,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     exit;
 }
 
+// [SEGURIDAD] Exige POST con token CSRF válido.
 csrf_exigir_post();
 
 $clienteRecibido = $_POST['cliente_id'] ?? '';
@@ -42,6 +44,7 @@ $valores = [
         : [],
 ];
 
+// [VALIDACION] Reglas del servidor.
 $validador = (new Validador())
     ->requerido('cliente_id', $valores['cliente_id'], 'Selecciona un cliente.')
     ->enteroPositivo('cliente_id', $valores['cliente_id'], 'El cliente seleccionado no es válido.')
