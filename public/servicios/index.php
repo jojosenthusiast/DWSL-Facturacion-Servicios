@@ -26,11 +26,12 @@ require $raiz . '/views/layout/encabezado.php';
     <?php else: ?>
         <div class="tabla-responsive">
             <table>
-                <thead><tr><th>Imagen</th><th>Nombre</th><th>Tipo</th><th>Importe</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <caption>Servicios registrados</caption>
+                <thead><tr><th scope="col">Imagen</th><th scope="col">Nombre</th><th scope="col">Tipo</th><th scope="col">Importe</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead>
                 <tbody>
                 <?php foreach ($servicios as $servicio): ?>
                     <tr>
-                        <td><img class="miniatura" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt=""></td>
+                        <td><img class="miniatura" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Miniatura del servicio <?= e($servicio->getNombre()) ?>"></td>
                         <td><strong><?= e($servicio->getNombre()) ?></strong><br><small><?= e($servicio->getCodigo()) ?></small></td>
                         <td><?= e($servicio->tipoLegible()) ?></td>
                         <td>$<?= e(number_format($servicio->calcularImporte(), 2)) ?></td>

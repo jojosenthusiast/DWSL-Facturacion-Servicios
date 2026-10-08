@@ -198,3 +198,9 @@ img, video, svg { max-width: 100%; }
   .contenedor { overflow-wrap: anywhere; }
   .tabla-responsive table { min-width: 520px; }
 }
+
+/* Accesibilidad: enlace de salto visible al recibir foco */
+.salto-contenido { position: absolute; left: .75rem; top: -6rem; z-index: 1000; padding: .65rem 1rem; background: #fff; color: #17243a; border: 2px solid currentColor; border-radius: .35rem; }
+.salto-contenido:focus { top: .5rem; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }

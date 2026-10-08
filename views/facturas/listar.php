@@ -8,6 +8,7 @@ declare(strict_types=1);
     <p>Todavía no hay facturas registradas.</p>
 <?php else: ?>
     <div class="tabla-responsive">
+        <table class="tabla">
         <caption>Facturas emitidas</caption>
         <thead>
         <tr>
@@ -30,4 +31,5 @@ declare(strict_types=1);
         <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 <?php endif; ?>

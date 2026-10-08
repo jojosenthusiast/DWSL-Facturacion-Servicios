@@ -23,6 +23,7 @@ $enlaces = [
     <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
+<a class="salto-contenido" href="#contenido-principal">Saltar al contenido principal</a>
 <header class="cabecera-sitio">
     <div class="contenedor">
         <p class="nombre-sistema"><a href="/"><?= e($nombreSistema) ?></a></p>

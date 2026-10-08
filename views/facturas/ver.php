@@ -22,7 +22,8 @@ $lineas = $factura->obtenerLineas();
         <p>La factura no tiene servicios asociados.</p>
     <?php else: ?>
         <div class="tabla-responsive">
-            <caption>Servicios incluidos</caption>
+            <table class="tabla">
+        <caption>Servicios incluidos</caption>
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -46,6 +47,7 @@ $lineas = $factura->obtenerLineas();
             </tr>
             </tfoot>
         </table>
+    </div>
     <?php endif; ?>
 </section>
 
