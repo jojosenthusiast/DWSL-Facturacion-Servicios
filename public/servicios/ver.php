@@ -21,24 +21,17 @@ if ($servicio === null) {
 $gestorImagenes = new GestorImagenes(dirname(__DIR__) . '/uploads');
 $datosEspecificos = $servicio->datosEspecificos();
 $camposEspecificos = $servicio->camposEspecificos();
-$mensajeExito = flash_obtener('success');
-$mensajeError = flash_obtener('error');
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($servicio->getNombre()) ?></title>
-    <link rel="stylesheet" href="/css/estilos.css">
-</head>
-<body>
-<main class="contenedor">
+$raiz = dirname(__DIR__, 2);
+$titulo = $servicio->getNombre();
+require $raiz . '/views/layout/encabezado.php';
+?>
+
     <p><a href="/servicios/index.php">← Volver a servicios</a></p>
-    <?php require dirname(__DIR__, 2) . '/views/partials/mensajes.php'; ?>
+
     <div class="detalle-servicio">
         <img class="imagen-detalle" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Imagen de <?= e($servicio->getNombre()) ?>">
         <div>
-            <h1><?= e($servicio->getNombre()) ?></h1>
+            <h2><?= e($servicio->getNombre()) ?></h2>
             <dl class="lista-datos">
                 <dt>Código</dt><dd><?= e($servicio->getCodigo()) ?></dd>
                 <dt>Tipo</dt><dd><?= e($servicio->tipoLegible()) ?></dd>
@@ -55,6 +48,4 @@ $mensajeError = flash_obtener('error');
             </div>
         </div>
     </div>
-</main>
-</body>
-</html>
+<?php require $raiz . '/views/layout/pie.php'; ?>

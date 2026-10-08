@@ -11,24 +11,15 @@ use App\Services\GestorImagenes;
 $repositorio = new ServicioRepositorio(conexion_obtener());
 $gestorImagenes = new GestorImagenes(dirname(__DIR__) . '/uploads');
 $servicios = $repositorio->listar();
-$mensajeExito = flash_obtener('success');
-$mensajeError = flash_obtener('error');
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Servicios</title>
-    <link rel="stylesheet" href="/css/estilos.css">
-</head>
-<body>
-<main class="contenedor contenedor-ancho">
+$raiz = dirname(__DIR__, 2);
+$titulo = 'Servicios';
+require $raiz . '/views/layout/encabezado.php';
+?>
+
     <header class="cabecera-pagina">
-        <div><h1>Servicios</h1><p>Administración de servicios facturables.</p></div>
+        <div><h2>Servicios</h2><p>Administración de servicios facturables.</p></div>
         <a class="boton" href="/servicios/crear.php">Crear servicio</a>
     </header>
-
-    <?php require dirname(__DIR__, 2) . '/views/partials/mensajes.php'; ?>
 
     <?php if ($servicios === []): ?>
         <div class="vacio"><p>No hay servicios registrados.</p><a href="/servicios/crear.php">Registrar el primero</a></div>
@@ -55,6 +46,4 @@ $mensajeError = flash_obtener('error');
             </table>
         </div>
     <?php endif; ?>
-</main>
-</body>
-</html>
+<?php require $raiz . '/views/layout/pie.php'; ?>

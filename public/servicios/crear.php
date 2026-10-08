@@ -15,19 +15,12 @@ $camposPorTipo = ServicioFactory::camposPorTipo();
 $accion = '/servicios/guardar.php';
 $textoBoton = 'Guardar servicio';
 $imagenActualUrl = null;
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crear servicio</title>
-    <link rel="stylesheet" href="/css/estilos.css">
-</head>
-<body>
-<main class="contenedor">
+$raiz = dirname(__DIR__, 2);
+$titulo = 'Crear servicio';
+require $raiz . '/views/layout/encabezado.php';
+?>
+
     <p><a href="/servicios/index.php">← Volver a servicios</a></p>
-    <h1>Crear servicio</h1>
+
     <?php require __DIR__ . '/_formulario.php'; ?>
-</main>
-</body>
-</html>
+<?php require $raiz . '/views/layout/pie.php'; ?>
