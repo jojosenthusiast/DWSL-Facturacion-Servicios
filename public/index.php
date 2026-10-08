@@ -18,7 +18,7 @@ $mensaje = flash_obtener('success');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Facturación de servicios</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
 <main class="contenedor">

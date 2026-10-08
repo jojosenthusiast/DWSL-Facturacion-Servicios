@@ -20,7 +20,7 @@ $enlaces = [
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($tituloPagina) ?> | <?= e($nombreSistema) ?></title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
 <header class="cabecera-sitio">
