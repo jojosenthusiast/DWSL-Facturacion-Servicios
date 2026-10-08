@@ -105,3 +105,16 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--color-primario
   .tarjetas, .grid-tarjetas { grid-template-columns: 1fr; }
   .tabla { display: block; overflow-x: auto; white-space: nowrap; }
 }
+
+/* Panel de inicio Â· Caso F (commit 04) */
+.panel-inicio { padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--radio, .75rem); background: #eaf1fb; border: 1px solid var(--color-borde, #d9e1ec); }
+.panel-inicio-etiqueta { margin: 0 0 .5rem; font-size: .875rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--color-primario, #1c4c93); }
+.panel-inicio h2 { margin: 0 0 .75rem; font-size: clamp(1.45rem, 3vw, 2rem); }
+.panel-inicio p:last-child { margin-bottom: 0; }
+.panel-modulos, .panel-resumen { margin-top: 2rem; }
+.panel-modulos > h2, .panel-resumen > h2 { margin: 0 0 1rem; }
+.modulo-tarjeta { display: flex; flex-direction: column; gap: .75rem; }
+.modulo-tarjeta h3, .modulo-tarjeta p { margin: 0; }
+.modulo-tarjeta .boton { margin-top: auto; align-self: flex-start; }
+.panel-resumen { padding: 1.25rem; border: 1px solid var(--color-borde, #d9e1ec); border-radius: var(--radio, .75rem); }
+@media (max-width: 768px) { .modulo-tarjeta .boton { align-self: stretch; } }
