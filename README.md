@@ -184,3 +184,11 @@ La Fase 1 implementaba el cálculo de servicios, la factura y su impresión en c
 ## Seguridad y alcance
 
 El servidor `php -S` y los datos del `seed.sql` son solo para desarrollo. No publiques credenciales, no subas `config/config.php`, y no interpretes las comprobaciones de auditoría estática como garantía de seguridad completa.
+
+## Diagramas y evidencias de Fase 2
+
+- [Diagrama del modelo relacional](docs/modelo-relacional.md)
+- [Diagrama de clases y correspondencia con tablas](docs/clases-y-tablas.md)
+- [Guia de capturas reales de las paginas web](docs/evidencias/README.md)
+
+Las capturas PNG deben agregarse a `docs/evidencias/` una vez verificadas las rutas en el navegador.
