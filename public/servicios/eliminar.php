@@ -41,18 +41,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
     servicios_405();
 }
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eliminar servicio</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body>
-<main class="contenedor">
+$raiz = dirname(__DIR__, 2);
+$titulo = 'Eliminar servicio';
+require $raiz . '/views/layout/encabezado.php';
+?>
+
     <p><a href="/servicios/ver.php?id=<?= e($id) ?>">← Cancelar</a></p>
-    <h1>Eliminar servicio</h1>
+
     <div class="alerta alerta-error">
         <p>¿Confirmas que deseas eliminar <strong><?= e($servicio->getNombre()) ?></strong>?</p>
         <p>Esta acción no se puede deshacer.</p>
@@ -62,6 +57,4 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
         <button class="boton-peligro" type="submit">Sí, eliminar</button>
         <a class="boton-secundario" href="/servicios/ver.php?id=<?= e($id) ?>">No, cancelar</a>
     </form>
-</main>
-</body>
-</html>
+<?php require $raiz . '/views/layout/pie.php'; ?>

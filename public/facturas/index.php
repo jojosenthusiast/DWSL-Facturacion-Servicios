@@ -34,6 +34,6 @@ $facturas = array_map(
 $raiz = dirname(__DIR__, 2);
 $titulo = 'Facturas';
 
-require $raiz . '/views/layout/cabecera.php';
+require $raiz . '/views/layout/encabezado.php';
 require $raiz . '/views/facturas/listar.php';
 require $raiz . '/views/layout/pie.php';

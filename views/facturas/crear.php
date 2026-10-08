@@ -8,10 +8,11 @@ $errorPeriodo = formulario_error($errores, 'periodo');
 $errorServicios = formulario_error($errores, 'servicios');
 ?>
 <?php if ($errorGeneral !== null): ?>
-    <p class="mensaje mensaje--error" role="alert"><?= e($errorGeneral) ?></p>
+    <p class="alerta alerta-error mensaje-error" role="alert"><?= e($errorGeneral) ?></p>
 <?php endif; ?>
 
-<form method="post" action="/facturas/guardar.php" class="formulario">
+<p class="texto-ayuda">Selecciona el cliente, el periodo y los servicios que deseas facturar.</p>
+    <form method="post" action="/facturas/guardar.php" class="formulario">
     <input type="hidden" name="_csrf" value="<?= e(csrf_token()) ?>">
 
     <label class="campo">
@@ -25,14 +26,14 @@ $errorServicios = formulario_error($errores, 'servicios');
                 </option>
             <?php endforeach; ?>
         </select>
-        <?php if ($errorCliente !== null): ?><span class="error-campo"><?= e($errorCliente) ?></span><?php endif; ?>
+        <?php if ($errorCliente !== null): ?><span class="error-campo" role="alert"><?= e($errorCliente) ?></span><?php endif; ?>
     </label>
 
     <label class="campo">
         <span>Período de facturación (mes)</span>
         <input type="month" name="periodo" id="periodo"
                value="<?= e(formulario_valor($valores, 'periodo')) ?>" required>
-        <?php if ($errorPeriodo !== null): ?><span class="error-campo"><?= e($errorPeriodo) ?></span><?php endif; ?>
+        <?php if ($errorPeriodo !== null): ?><span class="error-campo" role="alert"><?= e($errorPeriodo) ?></span><?php endif; ?>
     </label>
 
     <fieldset class="campo">
@@ -53,11 +54,11 @@ $errorServicios = formulario_error($errores, 'servicios');
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
-        <?php if ($errorServicios !== null): ?><span class="error-campo"><?= e($errorServicios) ?></span><?php endif; ?>
+        <?php if ($errorServicios !== null): ?><span class="error-campo" role="alert"><?= e($errorServicios) ?></span><?php endif; ?>
     </fieldset>
 
     <p class="acciones">
         <button type="submit">Guardar factura</button>
-        <a href="/facturas/index.php">Cancelar</a>
+        <a class="boton boton-secundario" href="/facturas/index.php">Cancelar</a>
     </p>
 </form>

@@ -21,41 +21,44 @@ if ($servicio === null) {
 $gestorImagenes = new GestorImagenes(dirname(__DIR__) . '/uploads');
 $datosEspecificos = $servicio->datosEspecificos();
 $camposEspecificos = $servicio->camposEspecificos();
-$mensajeExito = flash_obtener('success');
-$mensajeError = flash_obtener('error');
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($servicio->getNombre()) ?></title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body>
-<main class="contenedor">
-    <p><a href="/servicios/index.php">← Volver a servicios</a></p>
-    <?php if ($mensajeExito !== null): ?><p class="alerta alerta-exito" role="status"><?= e($mensajeExito) ?></p><?php endif; ?>
-    <?php if ($mensajeError !== null): ?><p class="alerta alerta-error" role="alert"><?= e($mensajeError) ?></p><?php endif; ?>
-    <div class="detalle-servicio">
-        <img class="imagen-detalle" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Imagen de <?= e($servicio->getNombre()) ?>">
-        <div>
-            <h1><?= e($servicio->getNombre()) ?></h1>
-            <dl class="lista-datos">
-                <dt>Código</dt><dd><?= e($servicio->getCodigo()) ?></dd>
-                <dt>Tipo</dt><dd><?= e($servicio->tipoLegible()) ?></dd>
-                <dt>Estado</dt><dd><?= $servicio->estaActivo() ? 'Activo' : 'Inactivo' ?></dd>
-                <!-- [POLIMORFISMO] El detalle consume la API del modelo sin reconocer tipos concretos. -->
+$raiz = dirname(__DIR__, 2);
+$titulo = $servicio->getNombre();
+require $raiz . '/views/layout/encabezado.php';
+?>
+<section class="ficha-servicio" aria-label="Detalle del servicio">
+    <div class="ficha-superior">
+        <a class="enlace-volver" href="/servicios/index.php">&larr; Volver a servicios</a>
+        <span class="estado-servicio <?= $servicio->estaActivo() ? 'estado-activo' : 'estado-inactivo' ?>">
+            <?= $servicio->estaActivo() ? 'Activo' : 'Inactivo' ?>
+        </span>
+    </div>
+
+    <div class="ficha-contenido">
+        <div class="ficha-imagen">
+            <img class="imagen-detalle" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Imagen de <?= e($servicio->getNombre()) ?>">
+        </div>
+        <div class="ficha-informacion">
+            <p class="ficha-categoria"><?= e($servicio->tipoLegible()) ?></p>
+            <p class="ficha-codigo">C&oacute;digo: <strong><?= e($servicio->getCodigo()) ?></strong></p>
+            <h2 class="ficha-subtitulo">Informaci&oacute;n del servicio</h2>
+            <dl class="ficha-datos">
+                <div><dt>Tipo</dt><dd><?= e($servicio->tipoLegible()) ?></dd></div>
                 <?php foreach ($datosEspecificos as $campo => $valor): ?>
-                    <dt><?= e($camposEspecificos[$campo]['etiqueta'] ?? $campo) ?></dt><dd><?= e($valor) ?></dd>
+                    <div>
+                        <dt><?= e($camposEspecificos[$campo]['etiqueta'] ?? $campo) ?></dt>
+                        <dd><?= e($valor) ?></dd>
+                    </div>
                 <?php endforeach; ?>
-                <dt>Importe</dt><dd><strong>$<?= e(number_format($servicio->calcularImporte(), 2)) ?></strong></dd>
             </dl>
-            <div class="acciones-formulario">
-                <a class="boton" href="/servicios/editar.php?id=<?= e($servicio->getIdBd()) ?>">Editar</a>
-                <a class="boton-peligro" href="/servicios/eliminar.php?id=<?= e($servicio->getIdBd()) ?>">Eliminar</a>
+            <div class="ficha-total">
+                <span>Importe calculado</span>
+                <strong>$<?= e(number_format($servicio->calcularImporte(), 2)) ?></strong>
+            </div>
+            <div class="acciones-formulario ficha-acciones">
+                <a class="boton" href="/servicios/editar.php?id=<?= e($servicio->getIdBd()) ?>">Editar servicio</a>
+                <a class="boton-secundario enlace-peligro" href="/servicios/eliminar.php?id=<?= e($servicio->getIdBd()) ?>">Eliminar servicio</a>
             </div>
         </div>
     </div>
-</main>
-</body>
-</html>
+</section>
+<?php require $raiz . '/views/layout/pie.php'; ?>

@@ -19,6 +19,6 @@ $errores = $formulario['errores'];
 $raiz = dirname(__DIR__, 2);
 $titulo = 'Nueva factura';
 
-require $raiz . '/views/layout/cabecera.php';
+require $raiz . '/views/layout/encabezado.php';
 require $raiz . '/views/facturas/crear.php';
 require $raiz . '/views/layout/pie.php';

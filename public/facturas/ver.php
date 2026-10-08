@@ -11,7 +11,7 @@ $raiz = dirname(__DIR__, 2);
 
 $responderAviso = static function (int $codigo, string $titulo, string $aviso) use ($raiz): never {
     http_response_code($codigo);
-    require $raiz . '/views/layout/cabecera.php';
+    require $raiz . '/views/layout/encabezado.php';
     require $raiz . '/views/partials/aviso.php';
     require $raiz . '/views/layout/pie.php';
     exit;
@@ -41,6 +41,6 @@ $rango = sprintf(
 
 $titulo = sprintf('Factura #%d', $id);
 
-require $raiz . '/views/layout/cabecera.php';
+require $raiz . '/views/layout/encabezado.php';
 require $raiz . '/views/facturas/ver.php';
 require $raiz . '/views/layout/pie.php';

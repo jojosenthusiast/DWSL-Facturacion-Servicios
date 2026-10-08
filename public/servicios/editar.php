@@ -28,19 +28,12 @@ $accion = '/servicios/actualizar.php?id=' . $id;
 $textoBoton = 'Actualizar servicio';
 $gestorImagenes = new GestorImagenes(dirname(__DIR__) . '/uploads');
 $imagenActualUrl = servicios_imagen_url($gestorImagenes, $servicio->getImagen());
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Editar servicio</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body>
-<main class="contenedor">
+$raiz = dirname(__DIR__, 2);
+$titulo = 'Editar servicio';
+require $raiz . '/views/layout/encabezado.php';
+?>
+
     <p><a href="/servicios/ver.php?id=<?= e($id) ?>">← Volver al detalle</a></p>
-    <h1>Editar servicio</h1>
+
     <?php require __DIR__ . '/_formulario.php'; ?>
-</main>
-</body>
-</html>
+<?php require $raiz . '/views/layout/pie.php'; ?>

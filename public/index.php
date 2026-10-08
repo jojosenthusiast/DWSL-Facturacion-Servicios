@@ -1,34 +1,48 @@
 <?php
-
 declare(strict_types=1);
 
 require dirname(__DIR__) . '/bootstrap.php';
 
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    csrf_exigir_post();
-    flash('success', 'Protección CSRF verificada correctamente.');
-    header('Location: /', true, 303);
-    exit;
-}
+$raiz = dirname(__DIR__);
+$titulo = 'Inicio';
 
-$mensaje = flash_obtener('success');
-?><!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Facturación de servicios</title>
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body>
-<main class="contenedor">
-    <h1>Facturación de servicios</h1>
-    <?php if ($mensaje !== null): ?><p class="mensaje" role="status"><?= e($mensaje) ?></p><?php endif; ?>
-    <p>La base web está preparada. Las operaciones de escritura deben validar CSRF y usar consultas preparadas.</p>
-    <form method="post" action="/" class="formulario">
-        <input type="hidden" name="_csrf" value="<?= e(csrf_token()) ?>">
-        <button type="submit">Comprobar protección CSRF</button>
-    </form>
-</main>
-</body>
-</html>
+require $raiz . '/views/layout/encabezado.php';
+?>
+
+<section class="panel-inicio" aria-labelledby="presentacion-titulo">
+    <p class="panel-inicio-etiqueta">Caso F - Fase 2</p>
+    <h2 id="presentacion-titulo">Sistema de facturación de servicios</h2>
+    <p>Aplicación web para gestionar servicios facturables, consultar facturas y revisar reportes de facturación.</p>
+</section>
+
+<section class="panel-modulos" aria-labelledby="modulos-titulo">
+    <h2 id="modulos-titulo">Accesos principales</h2>
+
+    <div class="grid-tarjetas">
+        <article class="tarjeta modulo-tarjeta">
+            <h3>Servicios</h3>
+            <p>Consulta y administración de los servicios disponibles.</p>
+            <a class="boton" href="/servicios/index.php">Ir a Servicios</a>
+        </article>
+
+        <article class="tarjeta modulo-tarjeta">
+            <h3>Facturas</h3>
+            <p>Consulta las facturas registradas y sus detalles.</p>
+            <a class="boton" href="/facturas/index.php">Ir a Facturas</a>
+        </article>
+
+        <article class="tarjeta modulo-tarjeta">
+            <h3>Reporte</h3>
+            <p>Revisa la información consolidada de facturación.</p>
+            <a class="boton" href="/reporte/index.php">Ir al Reporte</a>
+        </article>
+    </div>
+</section>
+
+<section class="panel-resumen" aria-labelledby="resumen-titulo">
+    <h2 id="resumen-titulo">Resumen del sistema</h2>
+    <p>El Caso F integra diferentes tipos de servicio bajo un modelo de facturación orientado a objetos, con persistencia de datos y acceso web a sus operaciones.</p>
+    <p>Para consultar los registros actuales, utiliza los accesos a cada módulo. Este panel no presenta cifras no verificadas.</p>
+</section>
+
+<?php require $raiz . '/views/layout/pie.php'; ?>
