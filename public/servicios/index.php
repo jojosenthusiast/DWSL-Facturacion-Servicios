@@ -28,8 +28,7 @@ $mensajeError = flash_obtener('error');
         <a class="boton" href="/servicios/crear.php">Crear servicio</a>
     </header>
 
-    <?php if ($mensajeExito !== null): ?><p class="alerta alerta-exito" role="status"><?= e($mensajeExito) ?></p><?php endif; ?>
-    <?php if ($mensajeError !== null): ?><p class="alerta alerta-error" role="alert"><?= e($mensajeError) ?></p><?php endif; ?>
+    <?php require dirname(__DIR__, 2) . '/views/partials/mensajes.php'; ?>
 
     <?php if ($servicios === []): ?>
         <div class="vacio"><p>No hay servicios registrados.</p><a href="/servicios/crear.php">Registrar el primero</a></div>

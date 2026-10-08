@@ -36,9 +36,4 @@ $enlaces = [
 </header>
 <main id="contenido-principal" class="contenedor">
     <h1><?= e($tituloPagina) ?></h1>
-    <?php if ($mensajeExito !== null): ?>
-        <p class="mensaje" role="status"><?= e($mensajeExito) ?></p>
-    <?php endif; ?>
-    <?php if ($mensajeError !== null): ?>
-        <p class="mensaje mensaje--error" role="alert"><?= e($mensajeError) ?></p>
-    <?php endif; ?>
+    <?php require dirname(__DIR__) . '/partials/mensajes.php'; ?>
