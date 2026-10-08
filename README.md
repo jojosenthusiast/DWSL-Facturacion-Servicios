@@ -1,224 +1,186 @@
-# Facturación de Servicios (Caso F)
+# Facturación de Servicios — Caso F · Fase 2
 
-Sistema de facturación de servicios desarrollado en PHP aplicando diseño orientado a objetos, como parte de la asignatura **Desarrollo Web con Software Libre**.
-
-## Caso de estudio
-
-Una empresa de servicios factura consumos de distinta naturaleza: servicios medidos como agua y energía, servicios de tarifa plana con mensualidad fija y servicios por evento cobrados según cantidad.
-
-El sistema permite generar una factura mensual agrupando servicios de diferentes tipos mediante polimorfismo, manteniendo separado el cálculo de los servicios de la presentación final de la factura.
+Aplicación web de facturación de servicios desarrollada en **PHP 8.1+**, con programación orientada a objetos, persistencia en **MySQL/MariaDB**, interfaces HTML semánticas y CSS propio adaptable. Proyecto académico de **Desarrollo Web con Software Libre**.
 
 ## Integrantes
 
-* Coto Beltran, Angel Eduardo
-* Fernando Emilio Valle Bernal
-* Jorge Alexis Ramos Ramos
-* Murgas Juarez, Carlos Gabriel
-* Munguia Noyola, Leonel Alexander
-* Milton Josue Ramirez Gongora
+- Coto Beltran, Angel Eduardo
+- Fernando Emilio Valle Bernal
+- Jorge Alexis Ramos Ramos
+- Murgas Juarez, Carlos Gabriel
+- Munguia Noyola, Leonel Alexander
+- Milton Josue Ramirez Gongora
 
-## Descripción del proyecto
+## Descripción y funcionalidades
 
-El proyecto implementa un sistema de facturación capaz de registrar un cliente, definir un período de facturación y agregar distintos tipos de servicios.
+El **Caso F** permite administrar servicios de distinta naturaleza: **medidos** (consumo × tarifa), **tarifa plana** (mensualidad fija) y **por evento** (cantidad × tarifa). La aplicación incluye:
 
-Cada servicio calcula su importe según sus propias reglas y la clase `Factura` se encarga de reunir los servicios y calcular el total.
+- **Inicio:** descripción del caso y accesos a los módulos.
+- **Servicios:** listado, alta, detalle, edición y eliminación; validación de datos, carga de imágenes y conservación de datos del formulario si hay errores.
+- **Facturas:** creación de facturas con cliente, período y servicios activos; consulta de facturas emitidas y su detalle.
+- **Reporte:** visualización de facturas, líneas e importes, y total.
 
-La presentación de la factura se mantiene separada del cálculo mediante el módulo `ReporteFacturaConsola`, encargado de mostrar de forma legible en consola:
+La aplicación utiliza repositorios para la persistencia, una fábrica para reconstruir servicios y polimorfismo mediante el contrato `Facturable`. Se incluyen protección CSRF en solicitudes de escritura, consultas preparadas y escape de datos en la salida HTML.
 
-* cliente;
-* período de facturación;
-* servicios incluidos;
-* descripción de cada servicio;
-* importe de cada servicio;
-* total de la factura.
+## Requisitos
+
+- **PHP 8.1 o superior**, disponible desde la terminal, con extensiones **PDO** y **pdo_mysql** habilitadas.
+- **MySQL o MariaDB** en ejecución, con usuario que pueda crear/usar la base de datos o con una base previamente preparada.
+- **Composer** instalado.
+- Navegador web moderno.
+
+Comprobación desde CMD o terminal:
+
+```bash
+php -v
+php -m
+composer --version
+mysql --version
+```
+
+En `php -m` comprueba que figuren `PDO` y `pdo_mysql`. Si Windows indica que `php` no se reconoce, instala/configura PHP o añade su carpeta al `PATH` antes de seguir.
+
+## Instalación desde cero
+
+1. Clona el proyecto y entra en su carpeta:
+
+   ```bash
+   git clone https://github.com/jojosenthusiast/DWSL-Facturacion-Servicios.git
+   cd DWSL-Facturacion-Servicios
+   ```
+
+2. Instala dependencias y genera el autoload PSR-4:
+
+   ```bash
+   composer install
+   ```
+
+3. Copia la configuración de ejemplo **sin modificar el archivo original**:
+
+   **Windows (CMD):**
+
+   ```cmd
+   copy config\config.example.php config\config.php
+   ```
+
+   **Linux/macOS:**
+
+   ```bash
+   cp config/config.example.php config/config.php
+   ```
+
+4. Edita `config/config.php` para indicar la conexión local:
+
+   ```php
+   <?php
+   declare(strict_types=1);
+
+   return [
+       'database' => [
+           'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=facturacion_servicios;charset=utf8mb4',
+           'usuario' => 'TU_USUARIO',
+           'clave' => 'TU_CLAVE',
+       ],
+   ];
+   ```
+
+   `config/config.php` contiene credenciales locales: **no lo subas a Git**.
+
+5. Crea las tablas y carga los datos de prueba. Desde la **raíz del proyecto**, ejecuta en ese orden:
+
+   ```bash
+   mysql -u root -p < database/schema.sql
+   mysql -u root -p < database/seed.sql
+   ```
+
+   Sustituye `root` por el usuario con permisos adecuados. Si no tienes el ejecutable `mysql` en el `PATH`, abre estos archivos y ejecútalos en este orden desde tu cliente MySQL/MariaDB (por ejemplo, phpMyAdmin o MySQL Workbench). **No ejecutes `seed.sql` repetidamente** sobre una base ya poblada, porque puede provocar conflictos con campos únicos.
+
+6. Inicia el servidor web desde la **raíz**, no desde `public`:
+
+   ```bash
+   php -S localhost:8000 -t public
+   ```
+
+7. Abre [http://localhost:8000](http://localhost:8000).
+
+> El servidor integrado de PHP es para desarrollo y demostraciones locales; no debe exponerse como servidor de producción.
+
+## Rutas principales
+
+| Módulo | Ruta |
+|---|---|
+| Inicio | `/` |
+| Servicios | `/servicios/index.php` |
+| Crear servicio | `/servicios/crear.php` |
+| Facturas | `/facturas/index.php` |
+| Nueva factura | `/facturas/crear.php` |
+| Reporte | `/reporte/index.php` |
+
+Los detalles, la edición y la eliminación de servicios usan identificadores en la URL; la eliminación requiere confirmación mediante POST y token CSRF.
 
 ## Estructura del proyecto
 
 ```text
-src/
-├── Contratos/
-│   └── Facturable.php
-│       Contrato con calcularImporte() y obtenerDescripcion()
-│
-├── Reportes/
-│   └── ReporteFacturaConsola.php
-│       Genera la salida legible de la factura en consola
-│
-├── Servicios/
-│   └── Servicio.php
-│       Clase abstracta base para los servicios
-│
-├── ServicioMedido.php
-│   Servicio calculado mediante lectura anterior, lectura actual y tarifa
-│
-├── ServicioTarifaPlana.php
-│   Servicio con mensualidad fija
-│
-├── ServicioPorEvento.php
-│   Servicio cobrado según cantidad de eventos
-│
-├── Cliente.php
-│   Representa al titular de la factura y valida su información
-│
-├── PeriodoFacturacion.php
-│   Representa el rango de fechas del período facturado
-│
-└── Factura.php
-    Coordina los objetos Facturable y calcula el total de la factura
-
-composer.json
-    Configuración del proyecto y autoload mediante Composer
-
-composer.lock
-    Registro de las versiones utilizadas por Composer
-
-main.php
-    Punto de entrada del programa
-
-README.md
-    Documentación general del proyecto
+public/                  Punto de entrada web y páginas de módulos
+  index.php              Panel principal
+  servicios/             CRUD web de servicios
+  facturas/              Creación y consulta de facturas
+  reporte/               Reporte web
+  css/estilos.css        Estilos globales propios
+views/                   Layout, vistas y mensajes
+  layout/                encabezado.php y pie.php
+  partials/              Mensajes y avisos
+src/                     Dominio, contratos, repositorios, servicios y validación
+config/                  Ejemplo de configuración (config.example.php)
+database/                schema.sql y seed.sql
+bootstrap.php            Inicialización, sesión y conexión a BD
+composer.json            Requisitos y autoload PSR-4
+main.php                 Demostración original por consola
 ```
 
-## Requisitos
+Composer asigna el namespace `App\\` a `src/` mediante PSR-4. Si cambias su configuración, ejecuta `composer dump-autoload`.
 
-Para ejecutar el proyecto se necesita:
+## Modelo relacional (resumen)
 
-* PHP 8.1 o superior
-* Composer
+- `clientes` — personas a quienes se emiten facturas.
+- `servicios` — catálogo de servicios, tipo, importe/valores específicos e imagen.
+- `facturas` — cliente y período de facturación.
+- `factura_detalles` — asociación entre factura y servicio, con descripción, cantidad, precio e importe guardados.
 
-Para comprobar la versión instalada de PHP:
+Relaciones: **cliente 1:N facturas**, **factura 1:N detalles** y **servicio 1:N detalles**. El esquema íntegro, restricciones e índices se encuentran en `database/schema.sql`.
 
-```bash
-php -v
-```
+## Principios de orientación a objetos
 
-Para comprobar la instalación de Composer:
+- **Abstracción:** `Facturable` y `Servicio` definen las operaciones comunes de facturación.
+- **Encapsulamiento:** los modelos administran sus propios datos y validaciones.
+- **Herencia:** `ServicioMedido`, `ServicioTarifaPlana` y `ServicioPorEvento` especializan `Servicio`.
+- **Polimorfismo:** la factura obtiene descripciones e importes a través de las operaciones del contrato, sin necesitar decidir el subtipo en las vistas.
 
-```bash
-composer --version
-```
+## Validaciones y controles
 
-## Instalación
+- Reglas de dominio como tarifas positivas, cantidades positivas y lecturas coherentes.
+- Validaciones del formulario en servidor; restricciones HTML5 complementarias.
+- Carga y tratamiento de imágenes mediante `GestorImagenes`.
+- Protección **CSRF** en operaciones de escritura y patrón **POST/Redirect/GET**.
+- Consultas preparadas para la persistencia y escape de valores dinámicos con `e()` al mostrarlos en HTML.
 
-Después de clonar o descargar el repositorio, abrir una terminal en la carpeta raíz del proyecto.
+## Pruebas y resolución de problemas
 
-Instalar las dependencias y generar los archivos necesarios de Composer:
+- Revisa primero que PHP, `pdo_mysql`, Composer y MySQL/MariaDB estén disponibles.
+- Si falta `vendor/autoload.php`, vuelve a ejecutar `composer install`.
+- Si la conexión falla, confirma `config/config.php`, las credenciales y que exista `facturacion_servicios`.
+- Si no hay registros de ejemplo, verifica que `database/seed.sql` se haya ejecutado después de `database/schema.sql`.
+- Prueba manualmente: crear/editar/eliminar servicios, crear factura, consultar detalle y abrir el reporte.
+- Para pruebas automatizadas, utiliza los scripts de `tests/` que existan en tu versión del repositorio y sigue sus instrucciones. No se declara una ejecución exitosa sin haberlas ejecutado.
 
-```bash
-composer install
-```
+## Capturas y evidencias (pendientes de incorporar)
 
-Si se realizan cambios en la estructura de clases o en la configuración de autoload, se puede regenerar manualmente utilizando:
+En el **commit de evidencias** se agregarán capturas reales del sistema funcionando y sus enlaces aquí: Inicio, listado/creación/detalle/edición/eliminación de Servicios, listado/creación/detalle de Facturas y Reporte. No se incluyen imágenes de ejemplo simuladas.
 
-```bash
-composer dump-autoload
-```
+## De Fase 1 a Fase 2
 
-## Ejecución
+La Fase 1 implementaba el cálculo de servicios, la factura y su impresión en consola (`php main.php`). La Fase 2 mantiene ese dominio y agrega **base de datos relacional**, **repositorios**, **Factory**, **CRUD de servicios**, **facturas web**, **reporte web**, **interfaz consistente** y **validación de solicitudes**.
 
-Desde la carpeta raíz del proyecto ejecutar:
+## Seguridad y alcance
 
-```bash
-php main.php
-```
-
-El programa mostrará una factura directamente en la consola.
-
-La salida contiene una estructura similar a la siguiente:
-
-```text
-============================================================
-FACTURA MENSUAL
-============================================================
-Cliente: Ana Martinez
-Periodo: julio 2026
-------------------------------------------------------------
-
-Servicio 1
-Descripcion: Agua potable (medido) - consumo: ...
-Importe: $21.68
-
-Servicio 2
-Descripcion: Energia electrica (medido) - consumo: ...
-Importe: $15.40
-
-Servicio 3
-Descripcion: Internet residencial (tarifa plana) - mensualidad: $35.00
-Importe: $35.00
-
-Servicio 4
-Descripcion: Mantenimiento de areas comunes (por evento) - ...
-Importe: $30.00
-
-------------------------------------------------------------
-Total: $102.08
-============================================================
-```
-
-Los importes dependen de los datos proporcionados a los servicios desde `main.php`.
-
-## Uso de Composer
-
-Composer se utiliza para administrar la configuración y carga automática de las clases del proyecto.
-
-El archivo `composer.json` utiliza el estándar PSR-4 para asociar el namespace:
-
-```text
-App\
-```
-
-con la carpeta:
-
-```text
-src/
-```
-
-Esto permite utilizar las clases del proyecto sin tener que incluir manualmente cada archivo PHP mediante múltiples instrucciones `require`.
-
-Después de modificar la configuración del autoload se puede ejecutar:
-
-```bash
-composer dump-autoload
-```
-
-para regenerar el sistema de carga automática.
-
-## ¿Por qué no se guarda `/vendor/` en Git?
-
-La carpeta `vendor/` es generada automáticamente por Composer.
-
-Esta carpeta contiene archivos de dependencias y el sistema de autoload, por lo que no es necesario almacenarla directamente en el repositorio.
-
-Después de clonar el proyecto, cualquier integrante puede reconstruirla ejecutando:
-
-```bash
-composer install
-```
-
-Por esta razón, `/vendor/` debe mantenerse dentro del archivo `.gitignore`.
-
-## Diseño orientado a objetos
-
-* **Abstracción:** la interfaz `Facturable` y la clase abstracta `Servicio` definen qué debe hacer un objeto cobrable sin depender de la forma específica en que calcula su importe.
-
-* **Encapsulamiento:** los atributos se mantienen protegidos dentro de las clases y se aplican validaciones para garantizar estados correctos, como lecturas coherentes, tarifas válidas, correos válidos y períodos de facturación correctos.
-
-* **Herencia:** `ServicioMedido`, `ServicioTarifaPlana` y `ServicioPorEvento` heredan de `Servicio`, ya que representan diferentes tipos de servicios.
-
-* **Polimorfismo:** `Factura::calcularTotal()` recorre una colección de objetos que implementan `Facturable` y llama a `calcularImporte()` sin necesitar verificar el tipo concreto mediante `instanceof`.
-
-## Separación de responsabilidades
-
-El proyecto mantiene separado el cálculo de la factura de su presentación.
-
-La clase `Factura` se encarga de administrar los servicios y obtener los importes y el total.
-
-El módulo:
-
-```text
-src/Reportes/ReporteFacturaConsola.php
-```
-
-se encarga exclusivamente de recibir la factura y generar una representación legible para mostrarla en consola.
-
-Esta separación permite modificar el formato de presentación sin alterar las reglas utilizadas para calcular los importes de los servicios.
+El servidor `php -S` y los datos del `seed.sql` son solo para desarrollo. No publiques credenciales, no subas `config/config.php`, y no interpretes las comprobaciones de auditoría estática como garantía de seguridad completa.
