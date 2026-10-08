@@ -204,3 +204,40 @@ img, video, svg { max-width: 100%; }
 .salto-contenido:focus { top: .5rem; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+/* Ajustes finales de Servicios: listado y ficha de detalle. */
+.servicios-listado .cabecera-pagina { margin-bottom: 1.25rem; }
+.tabla-servicios table { min-width: 700px; width: 100%; border-collapse: collapse; }
+.tabla-servicios caption { caption-side: top; text-align: left; font-weight: 700; color: var(--color-texto); padding: .5rem 0 1rem; }
+.tabla-servicios th { background: #eaf0f8; font-weight: 700; white-space: nowrap; }
+.tabla-servicios td { vertical-align: middle; }
+.tabla-servicios td .numerico, .tabla-servicios td.numerico { font-variant-numeric: tabular-nums; }
+.tabla-servicios .acciones-tabla { display: flex; flex-wrap: nowrap; align-items: center; gap: .75rem; min-width: 0; }
+.estado-servicio { display: inline-flex; align-items: center; border-radius: 999px; padding: .3rem .7rem; font-size: .85rem; font-weight: 700; white-space: nowrap; }
+.estado-activo { background: #e8f7ee; color: #166337; }
+.estado-inactivo { background: #f1f3f6; color: #526278; }
+.ficha-servicio { margin-top: .25rem; }
+.ficha-superior { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.5rem; }
+.enlace-volver { display: inline-flex; align-items: center; min-height: 2.5rem; }
+.ficha-contenido { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(1.25rem, 3vw, 2.5rem); align-items: start; }
+.ficha-imagen { padding: 1rem; background: #f5f7fa; border: 1px solid var(--color-borde); border-radius: var(--radio); }
+.ficha-imagen .imagen-detalle { display: block; width: 100%; height: 250px; object-fit: contain; border-radius: .5rem; }
+.ficha-informacion { min-width: 0; }
+.ficha-categoria { display: inline-block; margin: 0 0 .6rem; font-size: .875rem; color: var(--color-primario); font-weight: 700; }
+.ficha-codigo { color: var(--color-secundario); margin: 0 0 1.25rem; }
+.ficha-subtitulo { margin: 0 0 .75rem; font-size: 1.2rem; }
+.ficha-datos { margin: 0; border-top: 1px solid var(--color-borde); }
+.ficha-datos > div { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--color-borde); }
+.ficha-datos dt { color: var(--color-secundario); }
+.ficha-datos dd { margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.ficha-total { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin: 1.25rem 0; padding: 1.25rem; border: 1px solid #cbdcf4; background: #eaf1fb; border-radius: var(--radio); }
+.ficha-total span { font-weight: 600; }
+.ficha-total strong { color: var(--color-primario); font-size: 1.75rem; font-variant-numeric: tabular-nums; }
+.ficha-acciones { display: flex; flex-wrap: wrap; gap: .75rem; }
+.ficha-acciones .enlace-peligro { color: var(--color-error); }
+.ficha-acciones .enlace-peligro:hover { background: var(--color-error-fondo); }
+@media (max-width: 768px) {
+  .ficha-contenido { grid-template-columns: 1fr; }
+  .ficha-imagen .imagen-detalle { height: min(60vw, 260px); }
+  .ficha-datos > div { gap: .5rem; }
+  .ficha-acciones > a { width: 100%; justify-content: center; }
+}

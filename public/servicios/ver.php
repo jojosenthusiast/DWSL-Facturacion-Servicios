@@ -25,27 +25,40 @@ $raiz = dirname(__DIR__, 2);
 $titulo = $servicio->getNombre();
 require $raiz . '/views/layout/encabezado.php';
 ?>
+<section class="ficha-servicio" aria-label="Detalle del servicio">
+    <div class="ficha-superior">
+        <a class="enlace-volver" href="/servicios/index.php">&larr; Volver a servicios</a>
+        <span class="estado-servicio <?= $servicio->estaActivo() ? 'estado-activo' : 'estado-inactivo' ?>">
+            <?= $servicio->estaActivo() ? 'Activo' : 'Inactivo' ?>
+        </span>
+    </div>
 
-    <p><a href="/servicios/index.php">← Volver a servicios</a></p>
-
-    <div class="detalle-servicio">
-        <img class="imagen-detalle" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Imagen de <?= e($servicio->getNombre()) ?>">
-        <div>
-            <h2><?= e($servicio->getNombre()) ?></h2>
-            <dl class="lista-datos">
-                <dt>Código</dt><dd><?= e($servicio->getCodigo()) ?></dd>
-                <dt>Tipo</dt><dd><?= e($servicio->tipoLegible()) ?></dd>
-                <dt>Estado</dt><dd><?= $servicio->estaActivo() ? 'Activo' : 'Inactivo' ?></dd>
-                <!-- [POLIMORFISMO] El detalle consume la API del modelo sin reconocer tipos concretos. -->
+    <div class="ficha-contenido">
+        <div class="ficha-imagen">
+            <img class="imagen-detalle" src="<?= e(servicios_imagen_url($gestorImagenes, $servicio->getImagen())) ?>" alt="Imagen de <?= e($servicio->getNombre()) ?>">
+        </div>
+        <div class="ficha-informacion">
+            <p class="ficha-categoria"><?= e($servicio->tipoLegible()) ?></p>
+            <p class="ficha-codigo">C&oacute;digo: <strong><?= e($servicio->getCodigo()) ?></strong></p>
+            <h2 class="ficha-subtitulo">Informaci&oacute;n del servicio</h2>
+            <dl class="ficha-datos">
+                <div><dt>Tipo</dt><dd><?= e($servicio->tipoLegible()) ?></dd></div>
                 <?php foreach ($datosEspecificos as $campo => $valor): ?>
-                    <dt><?= e($camposEspecificos[$campo]['etiqueta'] ?? $campo) ?></dt><dd><?= e($valor) ?></dd>
+                    <div>
+                        <dt><?= e($camposEspecificos[$campo]['etiqueta'] ?? $campo) ?></dt>
+                        <dd><?= e($valor) ?></dd>
+                    </div>
                 <?php endforeach; ?>
-                <dt>Importe</dt><dd><strong>$<?= e(number_format($servicio->calcularImporte(), 2)) ?></strong></dd>
             </dl>
-            <div class="acciones-formulario">
-                <a class="boton" href="/servicios/editar.php?id=<?= e($servicio->getIdBd()) ?>">Editar</a>
-                <a class="boton-peligro" href="/servicios/eliminar.php?id=<?= e($servicio->getIdBd()) ?>">Eliminar</a>
+            <div class="ficha-total">
+                <span>Importe calculado</span>
+                <strong>$<?= e(number_format($servicio->calcularImporte(), 2)) ?></strong>
+            </div>
+            <div class="acciones-formulario ficha-acciones">
+                <a class="boton" href="/servicios/editar.php?id=<?= e($servicio->getIdBd()) ?>">Editar servicio</a>
+                <a class="boton-secundario enlace-peligro" href="/servicios/eliminar.php?id=<?= e($servicio->getIdBd()) ?>">Eliminar servicio</a>
             </div>
         </div>
     </div>
+</section>
 <?php require $raiz . '/views/layout/pie.php'; ?>
