@@ -135,3 +135,66 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--color-primario
   .cabecera-pagina > .boton { width: 100%; }
   .reporte-factura { padding: 1rem; }
 }
+
+/* COMMIT 07: responsive y adaptabilidad */
+/* Mejora progresiva: conserva el CSS y las clases existentes. */
+.cabecera-sitio .contenedor,
+.pie-sitio .contenedor {
+  width: min(calc(100% - 2rem), var(--ancho-maximo, 1120px));
+  margin: 0 auto;
+  padding: 1rem clamp(1rem, 3vw, 2rem);
+  box-sizing: border-box;
+}
+.cabecera-sitio .contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+}
+.nombre-sistema { margin: 0; font-weight: 750; }
+.nombre-sistema a { text-decoration: none; }
+.cabecera-sitio .navegacion { margin: 0; }
+.cabecera-sitio .navegacion a[aria-current="page"] { background: #eaf1fb; text-decoration: underline; text-underline-offset: .22em; }
+.cabecera-pagina { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.contenedor-ancho { max-width: var(--ancho-maximo, 1120px); }
+.panel-inicio, .panel-modulos, .panel-resumen { min-width: 0; }
+.grid-tarjetas, .tarjetas { align-items: stretch; }
+.tarjeta, .modulo-tarjeta { min-width: 0; overflow-wrap: anywhere; }
+.modulo-tarjeta { display: flex; flex-direction: column; gap: .6rem; }
+.modulo-tarjeta .boton { margin-top: auto; align-self: flex-start; }
+.formulario, .servicio-formulario { min-width: 0; }
+.formulario fieldset, .grupo-tipo, .campo { min-width: 0; max-width: 100%; }
+.formulario input, .formulario select, .formulario textarea { min-width: 0; }
+.acciones-formulario, .acciones-tabla { display: flex; align-items: center; flex-wrap: wrap; gap: .65rem; }
+.detalle-servicio { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.detalle-servicio > * { min-width: 0; }
+.detalle-servicio .imagen-detalle { width: 100%; height: auto; object-fit: contain; }
+.tabla-responsive { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.tabla-responsive table { width: 100%; min-width: 560px; border-collapse: collapse; }
+.tabla-responsive th, .tabla-responsive td { text-align: left; padding: .75rem; border-bottom: 1px solid var(--color-borde, #d9e1ec); }
+.tabla-responsive .acciones-tabla { min-width: 12rem; }
+.reporte { overflow-wrap: anywhere; }
+.reporte .tabla { max-width: 100%; }
+img, video, svg { max-width: 100%; }
+@media (max-width: 768px) {
+  .cabecera-sitio .contenedor, .pie-sitio .contenedor { width: calc(100% - 1rem); padding: .9rem; }
+  .cabecera-sitio .contenedor { flex-direction: column; align-items: stretch; }
+  .cabecera-sitio .navegacion { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+  .cabecera-sitio .navegacion a { display: flex; justify-content: center; text-align: center; min-width: 0; }
+  .cabecera-pagina { align-items: stretch; flex-direction: column; }
+  .cabecera-pagina .boton { width: 100%; }
+  .detalle-servicio { grid-template-columns: minmax(0, 1fr); }
+  .detalle-servicio .imagen-detalle { max-height: 280px; object-fit: contain; }
+  .modulo-tarjeta .boton { align-self: stretch; }
+  .acciones-formulario { flex-direction: column; align-items: stretch; }
+  .acciones-formulario > a, .acciones-formulario > button { width: 100%; text-align: center; justify-content: center; }
+  .reporte, .tarjeta, .panel { padding: 1rem; }
+  .tabla-responsive { margin-inline: -.25rem; }
+}
+@media (max-width: 480px) {
+  .cabecera-sitio .navegacion { grid-template-columns: 1fr; }
+  .nombre-sistema { text-align: center; }
+  .contenedor { overflow-wrap: anywhere; }
+  .tabla-responsive table { min-width: 520px; }
+}
