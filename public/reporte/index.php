@@ -13,6 +13,6 @@ $entradas = $repositorio->buscarTodas();
 $raiz = dirname(__DIR__, 2);
 $titulo = 'Reporte web de facturas';
 
-require $raiz . '/views/layout/cabecera.php';
+require $raiz . '/views/layout/encabezado.php';
 require $raiz . '/views/reporte/index.php';
 require $raiz . '/views/layout/pie.php';
